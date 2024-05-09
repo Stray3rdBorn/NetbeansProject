@@ -1,4 +1,4 @@
-/*
+1`/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -49,7 +49,7 @@ public class UserDatabase {
     
     public ResultSet getData() {
         try {
-            st = conn.createStatement(); //tạo đối tượng Statement để tương tác với CSDL
+            st = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY); //tạo đối tượng Statement để tương tác với CSDL
             rs = st.executeQuery("SELECT * FROM "+USER_TABLE);
         } catch (SQLException ex) {
             Logger.getLogger(UserDatabase.class.getName()).log(Level.SEVERE, null, ex);
@@ -104,7 +104,7 @@ public class UserDatabase {
             pst = conn.prepareStatement("SELECT * FROM "+USER_TABLE+" WHERE name = '" + name + "' AND pass = '" + pass +"'");
             rs = pst.executeQuery();
             
-            if(rs.first()) {
+            if(rs.next()) {
                 //user and pass is correct:
                 return 1;
             }
